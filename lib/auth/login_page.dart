@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tugas_mobile_backend/home/home_page.dart';
+import 'package:tugas_mobile_backend/main-page/home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

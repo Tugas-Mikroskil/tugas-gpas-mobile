@@ -3,12 +3,25 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tugas_mobile_backend/auth/login_page.dart';
 import 'package:tugas_mobile_backend/auth/register_page.dart';
-import 'package:tugas_mobile_backend/home/home_page.dart';
-import 'package:tugas_mobile_backend/home/settings_page.dart';
+import 'package:tugas_mobile_backend/main-page/home_page.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:tugas_mobile_backend/main-page/settings_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  AwesomeNotifications().initialize(
+    'resource://drawable/ic_notification',
+    [
+      NotificationChannel(
+        channelKey: 'basic_channel',
+        channelName: 'Basic notifications',
+        channelDescription: 'Notification channel for basic notifications',
+        defaultColor: Colors.orange,
+        ledColor: Colors.white,
+      ),
+    ],
+  );
   runApp(const MyApp());
 }
 
