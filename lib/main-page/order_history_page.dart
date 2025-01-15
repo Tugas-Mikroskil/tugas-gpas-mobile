@@ -25,7 +25,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
       try {
         Dio dio = Dio();
         final response =
-            await dio.get('http://192.168.1.8:3000/order/user/$token');
+            await dio.get('http://rein.gpasolution.id/order/user/$token');
 
         if (response.statusCode == 200) {
           setState(() {
@@ -91,7 +91,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
                                 child: Image.network(
-                                  'http://192.168.1.8:3000/car/image/${carData['image']}',
+                                  'http://rein.gpasolution.id/car/image/${carData['image']}',
                                   width: 120,
                                   height: 90,
                                   fit: BoxFit.cover,

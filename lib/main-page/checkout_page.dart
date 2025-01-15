@@ -237,83 +237,84 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   // Handle checkout
   void _checkout() async {
-  setState(() {
-    isLoading = true;
-  });
-
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-
-  // Retrieve the token from SharedPreferences
-  String? token = prefs.getString('token');
-
-  // Prepare the data to send to the backend
-  final Map<String, dynamic> orderData = {
-    "firstName": firstNameController.text,
-    "lastName": lastNameController.text,
-    "days": int.tryParse(daysController.text) ?? 0,
-    "carId": widget.carId,
-    "phoneNumber": phoneController.text,
-    "citizenNumber": citizenNumberController.text,
-    "address": addressController.text,
-    "destination": destinationController.text,
-    "userId": token,
-  };
-
-  try {
-    // Send the POST request
-    final response = await http.post(
-      Uri.parse('http://192.168.1.8:3000/order'),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: json.encode(orderData),
-    );
-
-    // Check the response status
-    if (response.statusCode == 200) {
-      setState(() {
-        isLoading = false;
-      });
-
-      // Show success message using Awesome Notifications
-      AwesomeNotifications().createNotification(
-        content: NotificationContent(
-          id: 1,
-          channelKey: 'basic_channel',
-          title: 'Order Successful',
-          body: 'Your order for ${widget.carName} has been successfully placed!',
-          backgroundColor: Colors.black,
-          notificationLayout: NotificationLayout.Default,
-        ),
-      );
-
-      // Show success message
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Successfully checked out!')),
-      );
-
-      // Navigate back to HomePage
-      Navigator.pop(context); // Close the CheckoutPage
-      Navigator.pop(context); // Navigate back to the HomePage
-    } else {
-      setState(() {
-        isLoading = false;
-      });
-
-      // Handle errors
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${response.statusCode}')),
-      );
-    }
-  } catch (error) {
     setState(() {
-      isLoading = false;
+      isLoading = true;
     });
 
-    // Handle network error
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Network error, please try again later.')),
-    );
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Retrieve the token from SharedPreferences
+    String? token = prefs.getString('token');
+
+    // Prepare the data to send to the backend
+    final Map<String, dynamic> orderData = {
+      "firstName": firstNameController.text,
+      "lastName": lastNameController.text,
+      "days": int.tryParse(daysController.text) ?? 0,
+      "carId": widget.carId,
+      "phoneNumber": phoneController.text,
+      "citizenNumber": citizenNumberController.text,
+      "address": addressController.text,
+      "destination": destinationController.text,
+      "userId": token,
+    };
+
+    try {
+      // Send the POST request
+      final response = await http.post(
+        Uri.parse('http://rein.gpasolution.id/order'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(orderData),
+      );
+
+      // Check the response status
+      if (response.statusCode == 200) {
+        setState(() {
+          isLoading = false;
+        });
+
+        // Show success message using Awesome Notifications
+        AwesomeNotifications().createNotification(
+          content: NotificationContent(
+            id: 1,
+            channelKey: 'basic_channel',
+            title: 'Order Successful',
+            body:
+                'Your order for ${widget.carName} has been successfully placed!',
+            backgroundColor: Colors.black,
+            notificationLayout: NotificationLayout.Default,
+          ),
+        );
+
+        // Show success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Successfully checked out!')),
+        );
+
+        // Navigate back to HomePage
+        Navigator.pop(context); // Close the CheckoutPage
+        Navigator.pop(context); // Navigate back to the HomePage
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+
+        // Handle errors
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: ${response.statusCode}')),
+        );
+      }
+    } catch (error) {
+      setState(() {
+        isLoading = false;
+      });
+
+      // Handle network error
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Network error, please try again later.')),
+      );
+    }
   }
-}
 }

@@ -30,16 +30,13 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> fetchUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // Retrieve the token from SharedPreferences
     String? token = prefs.getString('token');
 
     if (token != null) {
       print(token);
-      // Use the token as the UID to fetch user data
       user = await DatabaseHelper.instance.getUserByUID(token);
 
       if (user == null) {
-        // User does not exist, create a new user
         user = User(
           uid: token,
           name: '',
@@ -49,7 +46,6 @@ class _SettingsPageState extends State<SettingsPage> {
           address: '',
         );
 
-        // Insert the new user into the database
         await DatabaseHelper.instance.insertUser(user!);
       }
 
@@ -62,9 +58,8 @@ class _SettingsPageState extends State<SettingsPage> {
         isLoading = false;
       });
     } else {
-      // Handle the case where the token is not available (e.g., show an error message)
       setState(() {
-        isLoading = false; // Set loading to false even if there's an error
+        isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('User token not found.')),
@@ -75,7 +70,6 @@ class _SettingsPageState extends State<SettingsPage> {
   Future<void> updateUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // Retrieve the token from SharedPreferences
     String? token = prefs.getString('token');
     if (_formKey.currentState!.validate() && token != null) {
       user = User(

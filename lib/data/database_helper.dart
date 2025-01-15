@@ -59,7 +59,7 @@ class DatabaseHelper {
     return await db.insert(
       'user',
       user.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace, // Replace if exists
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 

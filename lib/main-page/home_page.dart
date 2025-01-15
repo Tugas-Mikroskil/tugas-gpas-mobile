@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tugas_mobile_backend/main-page/car_details_page.dart';
+import 'package:tugas_mobile_backend/main-page/help_page.dart';
 import 'package:tugas_mobile_backend/main-page/order_history_page.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
@@ -41,7 +42,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> fetchCars() async {
     try {
       Dio dio = Dio();
-      final response = await dio.get('http://192.168.1.8:3000/car');
+      final response = await dio.get('http://rein.gpasolution.id/car');
 
       print(response.data);
 
@@ -56,6 +57,9 @@ class _HomePageState extends State<HomePage> {
       }
     } catch (e) {
       print('Error fetching cars: $e');
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -92,12 +96,19 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           IconButton(
+            icon: const Icon(Icons.help, color: Colors.white), // Help button
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => HelpPage(), // Navigate to HelpPage
+              ));
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.history,
                 color: Colors.white), // Order History button
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) =>
-                    OrderHistoryPage(), // Navigate to OrderHistoryPage
+                builder: (context) => OrderHistoryPage(),
               ));
             },
           ),
@@ -195,7 +206,7 @@ class CarListItem extends StatelessWidget {
           child: Row(
             children: [
               Image.network(
-                'http://192.168.1.8:3000/car/image/${car['image']}',
+                'http://rein.gpasolution.id/car/image/${car['image']}',
                 width: 130,
                 height: 90,
                 fit: BoxFit.cover,

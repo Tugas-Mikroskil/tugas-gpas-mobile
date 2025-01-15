@@ -69,7 +69,7 @@ class _CarDetailsState extends State<CarDetails> {
                             },
                             itemBuilder: (context, index) {
                               return Image.network(
-                                'http://192.168.1.8:3000/car/image/${gallery[index]}',
+                                'http://rein.gpasolution.id/car/image/${gallery[index]}',
                                 width: screenWidth,
                                 height: 240,
                                 fit: BoxFit.cover,
@@ -204,7 +204,7 @@ class _CarDetailsState extends State<CarDetails> {
                           carName: widget.car['name'],
                           carPrice: widget.car['price'],
                           carImage:
-                              "http://192.168.1.8:3000/car/image/${widget.car['image']}",
+                              "http://rein.gpasolution.id/car/image/${widget.car['image']}",
                           carId: widget.car['id'],
                         ),
                       ),
