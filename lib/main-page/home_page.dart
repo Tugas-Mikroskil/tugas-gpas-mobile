@@ -7,11 +7,17 @@ import 'package:tugas_mobile_backend/main-page/order_history_page.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
 class HomePage extends StatefulWidget {
+  final Dio dio;
+
+  HomePage({required this.dio});
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  Dio get dio => widget.dio;
+
   List<dynamic> carList = [];
   List<dynamic> filteredCarList = [];
   bool isLoading = true;
@@ -41,7 +47,6 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> fetchCars() async {
     try {
-      Dio dio = Dio();
       final response = await dio.get('http://rein.gpasolution.id/car');
 
       print(response.data);

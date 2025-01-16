@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
           ),
           initialRoute: snapshot.data == true ? '/home' : '/login',
           routes: {
-            '/home': (context) => HomePage(),
+            '/home': (context) => HomePage(dio: Dio()),
             '/login': (context) => LoginPage(),
             '/register': (context) => RegisterPage(),
             '/settings': (context) => SettingsPage(),
